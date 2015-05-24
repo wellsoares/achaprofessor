@@ -5,11 +5,10 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
-import br.com.professor.interfaces.ServerLocationBo;
 import br.com.professores.controller.HomeController;
 
 @EnableWebMvc
-@ComponentScan(basePackageClasses = { HomeController.class, ServerLocationBo.class })
+@ComponentScan(basePackageClasses = { HomeController.class })
 public class AppWebConfiguration {
 
 	@Bean
