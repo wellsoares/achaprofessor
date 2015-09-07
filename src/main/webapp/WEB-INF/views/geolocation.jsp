@@ -40,53 +40,42 @@
                         dataType: "json",
                         type: "GET",
                         url: "http://localhost:8089/achaprofessor/loadMarkers",
-                        success: function (dados) {
-
+                        error: function (jqXHR, textStatus, errorThrown) {
+                            console.log("ERROR");
+                        },
+                        success: function (dados, textStatus, jqXHR) {
+                            setMarkers(dados);
+                            console.log("Success: ", dados);
+                            console.log("Success: ", textStatus);
+                            console.log("Success: ", jqXHR);
                         }
                     });
                 });
             }
 
-            function setMarkers() {
+            function setMarkers(dados) {
 
-            }
-
-            function initMap() {
-                var json = dados;
-//                    {
-//                        "title": "Stockholm",
-//                        "lat": 59.3,
-//                        "lng": 18.1,
-//                        "description": "Stockholm is the capital and the largest city of Sweden and constitutes the most populated urban area in Scandinavia with a population of 2.1 million in the metropolitan area (2010)"
-//                    },
-//                    {
-//                        "title": "Oslo",
-//                        "lat": 59.9,
-//                        "lng": 10.8,
-//                        "description": "Oslo is a municipality, and the capital and most populous city of Norway with a metropolitan population of 1,442,318 (as of 2010)."
-//                    },
-//                    {
-//                        "title": "Copenhagen",
-//                        "lat": 55.7,
-//                        "lng": 12.6,
-//                        "description": "Copenhagen is the capital of Denmark and its most populous city, with a metropolitan population of 1,931,467 (as of 1 January 2012)."
-//                    }
-//                ];
-
-                map = new google.maps.Map(document.getElementById('map'), {
-                    center: {lat: -34.397, lng: 150.644},
-                    zoom: 3
-                });
-                for (var i = 0, length = json.length; i < length; i++) {
-                    var data = json[i],
-                            latLng = new google.maps.LatLng(data.lat, data.lng);
+                var marcadores = dados.markers;
+                for (var i = 0, length = marcadores.length; i < length; i++) {
+                    var data = marcadores[i], latLng = new google.maps.LatLng(data.lat, data.lng);
                     // Creating a marker and putting it on the map
                     var marker = new google.maps.Marker({
                         position: latLng,
                         map: map,
                         title: data.title
                     });
+
+                    console.log("Marcadores: ", marker);
                 }
+
+            }
+
+            function initMap() {
+
+                map = new google.maps.Map(document.getElementById('map'), {
+                    center: {lat: -34.397, lng: 150.644},
+                    zoom: 3
+                });
 
                 var infoWindow = new google.maps.InfoWindow({map: map});
                 // Try HTML5 geolocation.
@@ -106,7 +95,10 @@
                     // Browser doesn't support Geolocation
                     handleLocationError(false, infoWindow, map.getCenter());
                 }
+
+                pontos();
             }
+
 
             function handleLocationError(browserHasGeolocation, infoWindow, pos) {
                 infoWindow.setPosition(pos);
