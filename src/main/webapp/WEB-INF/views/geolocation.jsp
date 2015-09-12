@@ -64,10 +64,7 @@
                         map: map,
                         title: data.title
                     });
-
-                    console.log("Marcadores: ", marker);
                 }
-
             }
 
             function initMap() {
@@ -95,7 +92,6 @@
                     // Browser doesn't support Geolocation
                     handleLocationError(false, infoWindow, map.getCenter());
                 }
-
                 pontos();
             }
 
